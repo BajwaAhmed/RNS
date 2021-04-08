@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+import Home from "./Components/Home";
+import SignupForm from "./Forms/SignupForm";
+import LoginForm from "./Forms/LoginForm";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+// import { firstTimeLoad } from "./Redux/actions/userActions";
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  componentDidMount = () => {
+    console.log(process.env.REACT_APP_API_KEY);
+    //on reloading dont go back to login page but get data from local storage but i have commented it out because signup api was having some issues
+    // this.props.firstTimeLoad();
+  };
+  render() {
+    return (
+      //Router for 3 pages Signup,login and Home
+      <Router>
+        <Switch>
+          <Route exact path="/Home" component={Home} />
+          <Route default path="/Signup" component={SignupForm} />
+          <Route path="/Login" component={LoginForm} />
+        </Switch>
+      </Router>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {};
+};
+export default connect(mapStateToProps, {
+  // firstTimeLoad,
+})(App);
